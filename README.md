@@ -1,4 +1,5 @@
 # FastIntegerCompression
+[![Build Status](https://travis-ci.org/lemire/FastIntegerCompression.js.png)](https://travis-ci.org/lemire/FastIntegerCompression.js)
 
 This is an integer compression library in JavaScript, useful for work on indexes.
 Given an array of integers, it produces an ArrayBuffer that uses far fewer bytes
@@ -16,3 +17,5 @@ You can install the library under node with the command line
 ```bash
    npm install fastintcompression
 ```
+
+This code is made available under the Apache License 2.0.
