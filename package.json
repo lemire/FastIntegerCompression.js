@@ -1,0 +1,31 @@
+{
+  "name": "fastintcompression",
+  "description": "a fast integer compression library in JavaScript",
+  "keywords": [
+    "integers",
+    "compression",
+    "performance"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemire/FastIntegerCompression.js.git"
+  },
+  "main": "FastIntegerCompression.js",
+  "scripts": {
+    "test": "mocha unit/basictests.js"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lemire/FastIntegerCompression.js/issues"
+  },
+  "homepage": "https://github.com/lemire/FastIntegerCompression.js#readme",
+  "dependencies": {
+    "benchmark": "~1.0.0",
+    "mocha": "^2.3.4"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.2"
+  },
+  "author": "Daniel Lemire <lemire@gmail.com> (http://lemire.me/en/)"
+}
