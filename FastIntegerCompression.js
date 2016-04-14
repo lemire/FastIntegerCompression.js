@@ -6,27 +6,13 @@
  *FastIntegerCompression
  * Simple usage :
  *  // var FastIntegerCompression = require("fastintcompression");// if you use node
- *  var b = new FastBitSet();// initially empty
- *  b.add(1);// add the value "1"
- *  b.has(1); // check that the value is present! (will return true)
- *  b.add(2);
- *  console.log(""+b);// should display {1,2}
- *  b.add(10);
- *  b.array(); // would return [1,2,10]
+ *  var array = [10,100000,65999,10,10,0,1,1,2000];
+ *  var buf = FastIntegerCompression.compress(array);
+ *  var back = FastIntegerCompression.uncompress(buf); // gets back [10,100000,65999,10,10,0,1,1,2000]
  *
- *  var c = new FastBitSet([1,2,3,10]); // create bitset initialized with values 1,2,3,10
- *  c.difference(b); // from c, remove elements that are in b
- *  var su = c.union_size(b);// compute the size of the union (bitsets are unchanged)
- * c.union(b); // c will contain all elements that are in c and b
- * var s1 = c.intersection_size(b);// compute the size of the intersection (bitsets are unchanged)
- * c.intersection(b); // c will only contain elements that are in both c and b
- * c = b.clone(); // create a (deep) copy of b and assign it to c.
- * c.equals(b); // check whether c and b are equal
- *
- *   See README.md file for a more complete description.
  *
  * You can install the library under node with the command line
- *   npm install fastbitset
+ *   npm install fastintcompression
  */
 'use strict';
 
