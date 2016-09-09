@@ -24,7 +24,7 @@ You can install the library under node with the command line
 
 This code is made available under the Apache License 2.0.
 
-## Performance numbers
+## Suitability 
 
 This library is meant to compress arrays of small integers. It is not meant to
 compress text documents or arrays of large (or random) integers.
