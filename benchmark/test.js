@@ -14,6 +14,7 @@ function BasicBench() {
         array.push(Math.round(Math.random() * t))
     }
     var buf = FastIntegerCompression.compress(array);
+    FastIntegerCompression.uncompress(buf);
     console.log('input size: '+sizeof.format(sizeof.sizeof(array))+' compressed size: '+sizeof.format(buf.byteLength));
 
     var suite = new Benchmark.Suite();
