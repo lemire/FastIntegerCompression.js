@@ -50,3 +50,9 @@ Fastest is FastIntegerCompression.uncompress
 These numbers means that we can uncompress 187,694 1000-integer arrays per second.
 That's 187 millions of integers per second.
 
+## You might also like...
+
+If you like this library, you might also like 
+- https://github.com/lemire/FastPriorityQueue.js
+- https://github.com/lemire/StablePriorityQueue.js
+- https://github.com/lemire/FastBitSet.js
