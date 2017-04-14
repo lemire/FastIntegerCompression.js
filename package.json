@@ -20,12 +20,9 @@
     "url": "https://github.com/lemire/FastIntegerCompression.js/issues"
   },
   "homepage": "https://github.com/lemire/FastIntegerCompression.js#readme",
-  "dependencies": {
+  "devDependencies": {
     "benchmark": "~1.0.0",
     "mocha": "^2.3.4"
-  },
-  "devDependencies": {
-    "mocha": "^2.3.2"
   },
   "author": "Daniel Lemire <lemire@gmail.com> (http://lemire.me/en/)"
 }
