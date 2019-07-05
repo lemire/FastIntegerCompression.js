@@ -50,7 +50,7 @@ FastIntegerCompression.compress = function(input) {
   var c = input.length;
   var buf = new ArrayBuffer(FastIntegerCompression.computeCompressedSizeInBytes(input));
   var view   = new Int8Array(buf);
-  var pos = 0
+  var pos = 0;
   for(var i = 0; i < c; i++) {
     var val = input[i];
     if (val < (1 << 7)) {
