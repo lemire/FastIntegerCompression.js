@@ -21,6 +21,7 @@
 function FastIntegerCompression() {
 }
 
+// private function
 function bytelog(val) {
   if (val < (1 << 7)) {
     return 1;
@@ -34,7 +35,19 @@ function bytelog(val) {
   return 5;
 }
 
+// private function
+function zigzag_encode(val) {
+  return (val + val) ^ (val >> 31);;
+}
+
+// private function
+function zigzag_decode(val) {
+  return  (val >> 1) ^ (- (val & 1));
+}
+
+
 // compute how many bytes an array of integers would use once compressed
+// input is expected to be an array of non-negative integers
 FastIntegerCompression.computeCompressedSizeInBytes = function(input) {
   var c = input.length;
   var answer = 0;
@@ -45,7 +58,20 @@ FastIntegerCompression.computeCompressedSizeInBytes = function(input) {
 };
 
 
-// compress an array of integers, return a compressed buffer (as an ArrayBuffer)
+// compute how many bytes an array of integers would use once compressed
+// input is expected to be an array of integers, some of them can be negative
+FastIntegerCompression.computeCompressedSizeInBytesSigned = function(input) {
+  var c = input.length;
+  var answer = 0;
+  for(var i = 0; i < c; i++) {
+    answer += bytelog(zigzag_encode(input[i]));
+  }
+  return answer;
+};
+
+// Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
+// It is expected that the integers are non-negative: the caller is responsible
+// for making this check. Floating-point numbers are not supported.
 FastIntegerCompression.compress = function(input) {
   var c = input.length;
   var buf = new ArrayBuffer(FastIntegerCompression.computeCompressedSizeInBytes(input));
@@ -89,6 +115,8 @@ FastIntegerCompression.computeHowManyIntegers = function(input) {
   return c - count;
 }
 // uncompress an array of integer from an ArrayBuffer, return the array
+// it is assumed that they were compressed using the compress function, the caller
+// is responsible for ensuring that it is the case.
 FastIntegerCompression.uncompress = function(input) {
   var array = []
   var inbyte = new Int8Array(input);
@@ -126,6 +154,80 @@ FastIntegerCompression.uncompress = function(input) {
   return array;
 };
 
+
+// Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
+// The integers can be signed (negative), but floating-point values are not supported.
+FastIntegerCompression.compressSigned = function(input) {
+  var c = input.length;
+  var buf = new ArrayBuffer(FastIntegerCompression.computeCompressedSizeInBytesSigned(input));
+  var view   = new Int8Array(buf);
+  var pos = 0;
+  for(var i = 0; i < c; i++) {
+    var val = zigzag_encode(input[i]);
+    if (val < (1 << 7)) {
+      view[pos++] = val ;
+    } else if (val < (1 << 14)) {
+      view[pos++] = (val & 0x7F) | 0x80;
+      view[pos++] = val >>> 7;
+    } else if (val < (1 << 21)) {
+      view[pos++] = (val & 0x7F) | 0x80;
+      view[pos++] = ( (val >>> 7) & 0x7F ) | 0x80;
+      view[pos++] = val >>> 14;
+    } else if (val < (1 << 28)) {
+      view[pos++] = (val & 0x7F ) | 0x80 ;
+      view[pos++] = ( (val >>> 7) & 0x7F ) | 0x80;
+      view[pos++] = ( (val >>> 14) & 0x7F ) | 0x80;
+      view[pos++] = val >>> 21;
+    } else {
+      view[pos++] = ( val & 0x7F ) | 0x80;
+      view[pos++] = ( (val >>> 7) & 0x7F ) | 0x80;
+      view[pos++] = ( (val >>> 14) & 0x7F ) | 0x80;
+      view[pos++] = ( (val >>> 21) & 0x7F ) | 0x80;
+      view[pos++] = val >>> 28;
+    }
+  }
+  return buf;
+};
+
+// uncompress an array of integer from an ArrayBuffer, return the array
+// it is assumed that they were compressed using the compressSigned function, the caller
+// is responsible for ensuring that it is the case.
+FastIntegerCompression.uncompressSigned = function(input) {
+  var array = []
+  var inbyte = new Int8Array(input);
+  var end = inbyte.length;
+  var pos = 0;
+  while (end > pos) {
+        var c = inbyte[pos++];
+        var v = c & 0x7F;
+        if (c >= 0) {
+          array.push(zigzag_decode(v))
+          continue;
+        }
+        c = inbyte[pos++];
+        v |= (c & 0x7F) << 7;
+        if (c >= 0) {
+          array.push(zigzag_decode(v))
+          continue;
+        }
+        c = inbyte[pos++];
+        v |= (c & 0x7F) << 14;
+        if (c >= 0) {
+          array.push(zigzag_decode(v))
+          continue;
+        }
+        c = inbyte[pos++];
+        v |= (c & 0x7F) << 21;
+        if (c >= 0) {
+          array.push(zigzag_decode(v))
+          continue;
+        }
+        c = inbyte[pos++];
+        v |= c << 28;
+        array.push(zigzag_decode(v))
+  }
+  return array;
+};
 
 ///////////////
 

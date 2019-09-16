@@ -3,7 +3,7 @@
 [![codebeat badge](https://codebeat.co/badges/fbff9479-9394-40c6-b12d-8c6b666c115e)](https://codebeat.co/projects/github-com-lemire-fastintegercompression-js)
 
 This is an integer compression library in JavaScript, useful for work on indexes.
-Given an array of small non-negative integers, it produces an ArrayBuffer that uses far fewer bytes
+Given an array of small integers, it produces an ArrayBuffer that uses far fewer bytes
 than the original (using VByte compression). It assumes a modern JavaScript engine with
 typed arrays.
  
@@ -17,6 +17,17 @@ From the compressed data, you can later recover the original  array quickly
    var buf = FastIntegerCompression.compress(array);
    var back = FastIntegerCompression.uncompress(buf); // gets back [10,100000,65999,10,10,0,1,1,2000]
 ``` 
+
+By default, non-negative integers are expected. If you have signed (negative and positive) integers, then you must use distinct functions since we need to code the sign bit:
+
+
+```javascript
+   // var FastIntegerCompression = require("fastintcompression");// if you use node
+   var array = [10,100000,65999,10,10,0,-1,-1,-2000];
+   var buf = FastIntegerCompression.compressSigned(array);
+   var back = FastIntegerCompression.uncompressSigned(buf); // gets back [10,100000,65999,10,10,0,-1,-1,-2000]
+``` 
+
 
 You can install the library under node with the command line
 ```bash
