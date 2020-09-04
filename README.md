@@ -12,12 +12,12 @@ From the compressed data, you can later recover the original  array quickly
 
 ```javascript
    // var FastIntegerCompression = require("fastintcompression");// if you use node
-   var array = [10,100000,65999,10,10,0,1,1,2000];
+   var array = [10,100000,65999,10,10,0,1,1,2000,0xFFFFFFFF];
    var buf = FastIntegerCompression.compress(array);
    var back = FastIntegerCompression.uncompress(buf); // gets back [10,100000,65999,10,10,0,1,1,2000]
 ``` 
 
-By default, non-negative integers are expected. If you have signed (negative and positive) integers, then you must use distinct functions since we need to code the sign bit:
+By default, non-negative 32-bit integers are expected. If you have signed (negative and positive) 32-bit integers, then you must use distinct functions since we need to code the sign bit:
 
 
 ```javascript
