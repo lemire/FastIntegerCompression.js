@@ -149,6 +149,9 @@ FastIntegerCompression.uncompress = function(input) {
         }
         c = inbyte[pos++];
         v |= c << 28;
+        if (v < 0) {
+          v += 0x100000000 ;
+        }
         array.push(v)
   }
   return array;
