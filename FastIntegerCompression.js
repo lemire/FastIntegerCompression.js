@@ -17,7 +17,7 @@
 'use strict';
 
 
-// you can provide an iterable
+// You can provide an iterable.
 function FastIntegerCompression() {
 }
 
@@ -46,8 +46,8 @@ function zigzag_decode(val) {
 }
 
 
-// compute how many bytes an array of integers would use once compressed
-// input is expected to be an array of non-negative integers
+// Compute how many bytes an array of integers would use once compressed.
+// The input is expected to be an array of non-negative integers.
 FastIntegerCompression.computeCompressedSizeInBytes = function(input) {
   var c = input.length;
   var answer = 0;
@@ -58,8 +58,8 @@ FastIntegerCompression.computeCompressedSizeInBytes = function(input) {
 };
 
 
-// compute how many bytes an array of integers would use once compressed
-// input is expected to be an array of integers, some of them can be negative
+// Compute how many bytes an array of integers would use once compressed.
+// The input is expected to be an array of integers, some of them can be negative.
 FastIntegerCompression.computeCompressedSizeInBytesSigned = function(input) {
   var c = input.length;
   var answer = 0;
@@ -104,7 +104,8 @@ FastIntegerCompression.compress = function(input) {
   return buf;
 };
 
-// from a compressed array of integers stored ArrayBuffer, compute the number of compressed integers by scanning the input
+// From a compressed array of integers stored ArrayBuffer,
+// compute the number of compressed integers by scanning the input.
 FastIntegerCompression.computeHowManyIntegers = function(input) {
   var view   = new Int8Array(input);
   var c = view.length;
@@ -114,11 +115,11 @@ FastIntegerCompression.computeHowManyIntegers = function(input) {
   }
   return c - count;
 }
-// uncompress an array of integer from an ArrayBuffer, return the array
-// it is assumed that they were compressed using the compress function, the caller
+// Uncompress an array of integer from an ArrayBuffer, return the array.
+// It is assumed that they were compressed using the compress function, the caller
 // is responsible for ensuring that it is the case.
 FastIntegerCompression.uncompress = function(input) {
-  var array = []
+  var array = [] // The size of the output is not yet known.
   var inbyte = new Int8Array(input);
   var end = inbyte.length;
   var pos = 0;
@@ -190,11 +191,11 @@ FastIntegerCompression.compressSigned = function(input) {
   return buf;
 };
 
-// uncompress an array of integer from an ArrayBuffer, return the array
-// it is assumed that they were compressed using the compressSigned function, the caller
+// Uncompress an array of integer from an ArrayBuffer, return the array.
+// It is assumed that they were compressed using the compressSigned function, the caller
 // is responsible for ensuring that it is the case.
 FastIntegerCompression.uncompressSigned = function(input) {
-  var array = []
+  var array = [] // The size of the output is not yet known.
   var inbyte = new Int8Array(input);
   var end = inbyte.length;
   var pos = 0;
