@@ -17,7 +17,7 @@ describe('FastIntegerCompression', function() {
   it('Testing simple compression', function() {
     var array = [10,100000,65999,10,10,0,1,1,2000,0xFFFFFFFF];
     var buf = FastIntegerCompression.compress(array);
-    if(! FastIntegerCompression.computeHowManyIntegers(buf) == array.length) throw "bad count";
+    if(FastIntegerCompression.computeHowManyIntegers(buf) !== array.length) throw "bad count";
     var back = FastIntegerCompression.uncompress(buf);
     if(!arraysEquals(array,back)) throw "bad";
 
@@ -28,7 +28,7 @@ describe('FastIntegerCompression', function() {
   it('Testing simple compression (signed)', function() {
     var array = [10,100000,65999,10,10,0,-1,-1,-2000];
     var buf = FastIntegerCompression.compressSigned(array);
-    if(! FastIntegerCompression.computeHowManyIntegers(buf) == array.length) throw "bad count";
+    if(FastIntegerCompression.computeHowManyIntegers(buf) !== array.length) throw "bad count";
     var back = FastIntegerCompression.uncompressSigned(buf);
     if(!arraysEquals(array,back)) throw "bad";
 

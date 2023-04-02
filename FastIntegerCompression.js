@@ -107,11 +107,11 @@ FastIntegerCompression.compress = function(input) {
 // From a compressed array of integers stored ArrayBuffer,
 // compute the number of compressed integers by scanning the input.
 FastIntegerCompression.computeHowManyIntegers = function(input) {
-  var view   = new Int8Array(input);
+  var view   = new Uint8Array(input);
   var c = view.length;
   var count = 0;
   for(var i = 0; i < c; i++) {
-    count += (input[i]>>>7);
+    count += (view[i]>>>7);
   }
   return c - count;
 }
