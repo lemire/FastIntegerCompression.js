@@ -1,5 +1,4 @@
 # FastIntegerCompression
-[![Build Status](https://travis-ci.org/lemire/FastIntegerCompression.js.png)](https://travis-ci.org/lemire/FastIntegerCompression.js)
 
 This is an integer compression library in JavaScript, useful for work on indexes.
 Given an array of small integers, it produces an ArrayBuffer that uses far fewer bytes
